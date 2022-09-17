@@ -11,12 +11,14 @@
     $_GET es una variable súper global de PHP que se utiliza para recopilar datos de 
     formulario después de enviar un formulario HTML con método="obtener".  */
         $_GET["v"];
-        if (isset($_GET["v"]) && $_GET["v"] == 1) {
-            $imagen = "img/foto1.jpg";
-        } else if (isset($_GET["v"]) && $_GET["v"] == 2) {
-            $imagen = "img/foto2.jpg";
-        } else if (isset($_GET["v"]) && $_GET["v"] == 3) {
-            $imagen = "img/foto3.webp";
+        if (isset($_GET["v"])) {
+            if ($_GET["v"] == 1) {
+                $imagen = "img/foto1.jpg";
+            } else if ($_GET["v"] == 2) {
+                $imagen = "img/foto2.jpg";
+            } else if ($_GET["v"] == 3) {
+                $imagen = "img/foto3.jpg";
+            }
         }
         ?>
     </head>
