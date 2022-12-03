@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticias</title>
+    <link rel="stylesheet" href="./views/css/custom.css">
+</head>
+<body>
+    <div class="container">
+		<header class="row justify-content-between align-items-center">
+			<h1 class="col-auto">Noticias</h1>
+			<nav class="col-auto">	
+				<ul class="nav">
+                    <li><a href="index.php">Inicio</a></li>
+                    <?php
+					if ($_SESSION['user'] -> getName()=="") {
+						echo '<li><a href="index.php?login">Login</a></li>';
+					} else {
+						echo '<li><a href="index.php?noticias">Noticias</a></li>';
+						echo '<li><a href="index.php?login&logout">Salir</a></li>';
+					}
+					if ($_SESSION['user'] -> getRol() == 0) {
+                        echo '<li><a href="index.php?admin">Administracion</a></li>';
+                    }
+					?>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="row justify-content-center mt-3">
+			<?php
+			foreach ($noticias as $Noticia) {
+				echo '<p>'.$Noticia->getUser()->getName().'</p>'.
+				'<p>'.$Noticia->getTitle().' '.
+				'<a href="'.$Noticia->getUrl().'">Enlace de la noticia</a></p>';
+				
+				echo '<div class="d-flex justify-content-around border-bottom border-2 pb-3">';
+				if ($_SESSION['user']->getId() != NULL) {
+					echo '<div>';
+						echo '<a class="p-1" href="?like=1&idNoticiaVotar='.$Noticia->getId().'&idUser='.$_SESSION['user']->getId().'"><img src="./views/icons/like.png" alt="like"></a>';
+						if ($Noticia->getLikes() == NULL) {echo '0';}
+						echo $Noticia->getLikes();
+						echo '<a class="p-1" href="?dislike=0&idNoticiaVotar='.$Noticia->getId().'&idUser='.$_SESSION['user']->getId().'"><img src="./views/icons/dislike.png" alt="dislike"></a>';
+						if ($Noticia->getDislikes() == NULL) {echo '0';}
+						echo $Noticia->getDislikes();
+					echo '</div>';	
+
+					echo '<div>';
+					if ($_SESSION['user']->getRol() == 0) {
+						echo '<a id="ocultar" href="?idNoticia='.$Noticia->getId().'">Eliminar noticia</a>';
+					}
+					echo '</div>';
+				}
+				echo '</div>';
+					
+			}
+			if (isset($error)) {
+				echo  '<script src="views/votacion.js"></script>';
+			}
+			?>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

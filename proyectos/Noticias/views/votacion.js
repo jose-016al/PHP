@@ -1,0 +1,1 @@
+alert("¡Ya has votado!");

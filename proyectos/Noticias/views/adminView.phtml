@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+    <link rel="stylesheet" href="./views/css/custom.css">
+</head>
+<body>
+    <div class="container">
+		<header class="row justify-content-between align-items-center">
+			<h1 class="col-auto">Noticias</h1>
+			<nav class="col-auto">	
+				<ul class="nav">
+                    <li><a href="index.php">Inicio</a></li>
+                    <?php
+					if ($_SESSION['user'] -> getName()=="") {
+						echo '<li><a href="index.php?login">Login</a></li>';
+					} else {
+						echo '<li><a href="index.php?noticias">Noticias</a></li>';
+						echo '<li><a href="index.php?login&logout">Salir</a></li>';
+					}
+                    if ($_SESSION['user'] -> getRol() == 0) {
+                        echo '<li><a href="index.php?admin">Administracion</a></li>';
+                    }
+					?>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="row justify-content-center mt-3">
+                <h2 class="text-center">Control de usuarios</h2>
+                <div class="col-12 col-sm-6 pb-3">
+                    <h4 class="text-center">Lista de usuarios</h4>
+                    <?php
+                    foreach ($usuarios as $User) {
+                        echo '<li class="text-center">'.$User->getName();
+                        echo '<form action="index.php?admin&id_user='.$User->getId().'" method="post">
+                            <input type="submit" name="addAdmin" value="Añadir admin"/>
+                        </form></li>';
+                    }
+                    ?>
+                </div>
+                <div class="col-12 col-sm-6 pb-3">
+                    <h4 class="text-center">Lista de administradores</h4>
+                    <?php
+                    foreach ($usuariosAdmin as $User) {
+                        echo '<li class="text-center">'.$User->getName();
+                        echo '<form action="index.php?admin&id_user='.$User->getId().'" method="post">
+                            <input type="submit" name="quitarAdmin" value="Quitar admin"/>
+                        </form></li>';
+                    }
+                    ?>
+                </div>
+                <div class="col-12">
+                    <h2 class="text-center">Modificar datos de usuario</h2>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

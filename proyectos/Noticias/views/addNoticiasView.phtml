@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Añadir noticia</title>
+        <link rel="stylesheet" href="views/css/custom.css">
+    </head>
+    <body>
+    <div class="container">
+		<header class="row justify-content-between align-items-center">
+			<h1 class="col-auto">Noticias</h1>
+			<nav class="col-auto">	
+				<ul class="nav">
+                    <li><a href="index.php">Inicio</a></li>
+                    <?php
+					if ($_SESSION['user'] -> getName()=="") {
+						echo '<li><a href="index.php?login">Login</a></li>';
+					} else {
+						echo '<li><a href="index.php?noticias">Noticias</a></li>';
+						echo '<li><a href="index.php?login&logout">Salir</a></li>';
+					}
+                    if ($_SESSION['user'] -> getRol() == 0) {
+                        echo '<li><a href="index.php?admin">Administracion</a></li>';
+                    }
+					?>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <div class="row justify-content-center mt-3">
+                <div class="col-12 col-md-5">
+                    <h2 class="text-center pt-5 mb-5">Añadir una nueva noticia</h2>
+
+                    <form action="index.php?noticias" method="POST">
+                        <div class="mb-4">
+                            <label class="form-label">Titulo de la noticia</label>
+                            <input type="text" class="form-control" name="title">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Enalce de la noticia</label>
+                            <input type="text" class="form-control" name="url">
+                        </div>
+                        <div class="d-grid">
+                            <input type="submit" class="btn btn-primary" name="addNoticia" value="Subir noticia">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
