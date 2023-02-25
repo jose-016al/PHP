@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./views/css/custom.css">
+</head>
+<body>
+    <div class="container">
+        <header class="row justify-content-between align-items-center pb-3">
+			<h1 class="col-auto">Chat Room</h1>
+			<nav class="col-auto">	
+				<ul class="nav">
+					<li><a href="index.php">Inicio</a></li>
+					<li><a href="index.php?addSala">Crear sala</a></li>
+					<?php
+					if ($_SESSION['user'] -> getName()=="") {
+						echo '<li><a href="index.php?login">Login</a></li>';
+					} else {
+						echo '<li><a href="index.php?login&logout">Salir</a></li>';
+					}
+					?>
+				</ul>
+			</nav>
+		</header>
+        <section>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9">
+					<div>
+						<?php
+						if ($_SESSION['user']->getName() != "") {
+							echo '<form action="index.php" method="post">
+								<label class="form-label">¿Quieres publicar un nuevo mensaje?</label>
+								<input type="text" class="form-control" name="mensaje">
+								<input type="submit" class="btn btn-primary" name="publicar" value="Publicar">
+							</form>';
+						}
+						?>
+					</div>
+					<div class="row">
+						<h4 class="text-center">Mensajes</h4>
+						<?php 
+						foreach ($mensajes as $Mensaje) {
+							echo '<p class="col-3 text-center">'.$Mensaje->getUser()->getName().'</p>';
+							echo '<div class="col-9 border-bottom">';
+								echo '<p>'.$Mensaje->getMensaje().'</p>';
+								echo '<p>'.$Mensaje->getFecha().'</p>';
+							echo '</div>';
+						}
+						?>
+					</div>
+				</div>
+
+				<div class="col-12 col-md-3">
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 text-center">
+                        <aside>
+                            <h4>Salas</h4>
+                            <?php
+                            foreach ($salas as $Sala) {
+                                echo '<a href="?sala='.$Sala->getId().'">'.$Sala->getName().'</a>';	
+                            }
+                            ?>
+                        </aside>
+                        <aside>
+                            <h4>Usuarios conectados</h4>
+                            <?php
+                            foreach ($online as $User) {
+                                echo "<p>".$User->getName()."</p>";
+                                
+                            }
+                            ?>
+                        </aside>
+                    </div>
+                <div>
+            </div>
+        </section>
+    </div>
+    </body>
+</html>

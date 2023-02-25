@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+}
+header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+nav {
+    width: 20%;
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+} 
+nav ul li a {
+    display: block;
+    float: left;
+    padding: 1rem;
+    text-decoration: none;
+    color: black;
+}
+nav ul li a:hover {
+    background-color: black;
+    color: white;
+}
+h2 {
+    text-align: center;
+    margin-top: 10px;
+}
+section {
+    padding: 10px;
+}
+#formulario {
+    border: solid black 1px;
+    border-radius: 30px;
+    padding: 20px;
+    width: 30%;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+#formulario form {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+#formulario label {
+    font-size: 18px;
+}
+#formulario input {
+    font-size: 18px;
+    margin-bottom: 10px;
+}

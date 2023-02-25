@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mi blog</title>
+</head>
+<body>
+<h1>Mi blog</h1>
+<a href="index.php">Inicio</a> -
+
+<?php
+if($_SESSION['user']->getName()=="")
+	echo '<a href="index.php?login">Login</a>';
+else {
+	echo '<a href="index.php?product&new">Añadir producto</a>';
+
+	echo '<a href="index.php?order&cart">Ver Carrito</a>';
+	echo 'Hola '.$_SESSION['user']->getName().' 
+	<a href="index.php?login&logout">Salir</a>';
+}
+echo "<br>";
+
+foreach($_SESSION['user']->getOrder()->getOrderLines() as $ol){
+	echo '<article>
+	<img src="views/images/'.$ol->getProduct()->getImage().'" width="100px">
+	<h5>'.$ol->getProduct()->getName().'</h5>
+	'.$ol->getCost().'€ (quedan '.$ol->getQuantity().')<br> 
+	</article>';
+}
+?>
+
+
+</body>
+</html>

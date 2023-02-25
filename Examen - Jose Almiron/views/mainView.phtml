@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./views/css/custom.css">
+</head>
+<body>
+    <div class="container">
+        <header class="row justify-content-between align-items-center pb-3">
+			<h1 class="col-auto">Control de trabajadores</h1>
+			<nav class="col-auto">	
+				<ul class="nav">
+					<li><a href="index.php">Inicio</a></li>
+					<?php
+					if ($_SESSION['user'] -> getName()=="") {
+						echo '<li><a href="index.php?login">Login</a></li>';
+					} else {
+						echo '<li><a href="index.php?login&logout">Salir</a></li>';
+						echo '<li><a href="index.php?jornada">Iniciar jornada</a></li>';
+					}
+					if ($finalizar == 1) {
+						echo '<li><a href="index.php?finalizar">Finalizar jornada</a></li>';
+					}
+					if ($_SESSION['user']->getRol() == 0) {
+						echo '<li><a href="index.php?admin">Administracion</a></li>';
+					}
+					?>
+				</ul>
+			</nav>
+		</header>
+        <section>
+            <div class="row justify-content-center">
+				<div>
+					<?php 
+						if ($incidencias >= 1) {
+							echo '<script> alert("Ya tienes una jornada abierta") </script>';
+							echo '<form action="index.php" method="post">
+								<label class="form-label">¿Motivo por el que no cerraste la jornada?</label>
+								<input type="text" class="form-control" name="justificante">
+								<input type="submit" class="btn btn-primary" name="justificar" value="Justificar">
+							</form>';
+						}
+					?>
+				</div>
+				<div>
+					<?php
+						if ($_SESSION['user']->getRol() == 0) {
+							echo '<div class="row">';
+							echo '<h2 class="text-center">Lista de jornadass</h2>';
+							foreach ($jornadas as $Tiempo) {
+								echo '<div class="col-9 border-bottom">';
+									echo '<p>Trabajador: '.$Tiempo->getUser()->getName().'</p>';
+									echo '<p>Fecha inicio jornada: '.$Tiempo->getInicio().'</p>';
+									echo '<p>Fecha fin de jornada: '.$Tiempo->getFin().'</p>';
+									echo '<p>Justificante de la incidencia: '.$Tiempo->getJustificante().'</p>';
+
+								echo '</div>';
+							}
+							echo '</div>';
+						}
+					?>
+				</div>
+				<div>
+					<?php
+						if ($_SESSION['user']->getRol() == 0) {
+							echo '<h2 class="text-center">Lista de jornadas segun mes y año </h2>';
+							echo '<div>';
+								echo '<form action="index.php" method="post">
+								<label class="form-label">Mes de la busqueda</label>
+								<input type="text" class="form-control" name="mes">
+								<label class="form-label">Año de la busqueda</label>
+								<input type="text" class="form-control" name="year">
+								<input type="submit" class="btn btn-primary" name="obtenerFechas" value="Consultar">
+								</form>';
+							echo '</div>';
+							echo '<div>';
+							if (isset($jornadasFecha)) {
+								foreach ($jornadasFecha as $Tiempo) {
+									echo '<div class="col-9 border-bottom">';
+										echo '<p>Trabajador: '.$Tiempo->getUser()->getName().'</p>';
+										echo '<p>Fecha inicio jornada: '.$Tiempo->getInicio().'</p>';
+										echo '<p>Fecha fin de jornada: '.$Tiempo->getFin().'</p>';
+										echo '<p>Justificante de la incidencia: '.$Tiempo->getJustificante().'</p>';
+	
+									echo '</div>';
+								}
+							}
+							echo '</div>';
+							echo '</div';
+						}
+					?>
+				</div>
+            </div>
+        </section>
+    </div>
+    </body>
+</html>

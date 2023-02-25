@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Administracion</title>
+        <link rel="stylesheet" href="views/css/style.css">
+    </head>
+    <body>
+    <header>
+		<h1>Blog</h1>
+		<nav>	
+		<div id="menuBuscar">
+			<form action="index.php?buscador" method="post">
+				<input type="text" name="buscar" placeholder="buscar...">
+				<input type="submit" name="busqueda" value="buscar"/>
+			</form>
+		</div>
+			<ul>
+				<li><a href="index.php">Inicio</a></li>
+				<?php
+				if($_SESSION['user'] -> getName()=="")
+					echo '<li><a href="index.php?login">Login</a></li>';
+				else if ($_SESSION['user'] -> getId_rol() == 1) {
+					echo '<li><a href="index.php?login&logout">Salir</a></li>';
+				} else {
+					// echo 'Hola '.$_SESSION['user']->getName();
+					echo '<li><a href="index.php?login&logout">Salir</a></li>'.'
+					<li><a href="index.php?añadir">Articulos</a></li>
+					<li><a href="index.php?admin">Administracion</a></li>';
+				}
+				?>
+			</ul>
+		</nav>
+	</header>
+        <section>
+            <h1>Administracion</h1>
+            <ul>
+                <?php
+                echo '<div id="adminPanel">';
+                    // lISTA DE USUARIOS SIN PERMISOS DE ADMINISTRACION
+                echo '<div id="usuariosNormales"><h2>Lista de usuarios</h2>';
+                    foreach ($usuarios as $User) {
+                        echo '<li>'.$User->getName();
+                            echo '<form action="index.php?admin&id_user='.$User->getId().'" method="post">
+                                <input type="submit" name="addAdmin" value="Añadir admin"/>
+                            </form></li>';
+                    }
+                echo '</div>';
+                    // lISTA DE USUARIOS ADMINISTRADORES
+                echo '<div id="usuariosAdmin"><h2>Lista de administradores</h2>';
+                    foreach ($usuariosAdmin as $User) {
+                        echo '<li>'.$User->getName();
+                        echo '<form action="index.php?admin&id_user='.$User->getId().'" method="post">
+                            <input type="submit" name="quitarAdmin" value="Quitar admin"/>
+                        </form></li>';
+                    }
+                echo '</div></div>';
+                ?>
+                
+                
+            </ul>
+        </section>
+    </body>
+</html>

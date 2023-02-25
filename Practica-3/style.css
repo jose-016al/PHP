@@ -7,10 +7,12 @@ header {
     justify-content: space-between;
 }
 nav {
-    width: 25%;
+    width: 50%;
 }
 nav ul {
     list-style: none;
+    display: flex;
+    justify-content: flex-end;
     padding: 0;
     margin: 0;
 } 
@@ -27,4 +29,21 @@ nav ul li a:hover {
 }
 section {
     padding: 10px;
+}
+#blog {
+    width: 50%;
+    margin: 0 auto;
+}
+#articulo img {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+}
+#articulo p {
+    margin-top: 10px;
+}
+#articulo #fecha {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
 }

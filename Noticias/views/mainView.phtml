@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Noticias</title>
+		<link rel="stylesheet" href="./views/css/style.css">
+		<style>
+			#container {
+				border-bottom: 1px solid black;
+			}
+			#container > #noticia {
+				display: flex;
+				align-items: center;
+			}
+			#container > #noticia * {
+				padding: 10px;
+			}
+			#container > #noticiasMenu {
+				display: flex;
+				align-items: center;
+			}
+			#container > #noticiasMenu * {
+				padding: 5px;
+			}
+			#ocultar {
+				margin-left: 200px;
+				color: red;
+			}
+			
+		</style>
+	</head>
+	<body>
+	<header>
+		<h1>Noticias</h1>
+		<nav>	
+			<ul>
+				<li><a href="index.php">Inicio</a></li>
+				<?php
+				if ($_SESSION['user'] -> getName()=="") {
+					echo '<li><a href="index.php?login">Login</a></li>';
+				} else {
+					echo '<li><a href="index.php?noticias">Noticias</a></li>';
+					echo '<li><a href="index.php?login&logout">Salir</a></li>';
+				}
+				?>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<?php
+		foreach ($noticias as $Noticia) {
+			echo '<div id="container">';
+				echo '<div id="noticia">';
+					echo '<p>'.$Noticia->getId_user()->getName().'</p>
+					<p>'.$Noticia->getTitle().'</p>
+					<a href="'.$Noticia->getUrl().'">Enlace de la noticia</a>';
+				echo '</div>';	
+				
+				if ($_SESSION['user']->getId() != NULL) {
+					echo '<div id="noticiasMenu">';
+						echo '<a href="?like=1&idNoticiaVotar='.$Noticia->getId().'&idUser='.$_SESSION['user']->getId().'"><img src="./views/icons/like.png" alt="like"></a>';
+						if ($Noticia->getLikes() == NULL) {echo '0';}
+						echo $Noticia->getLikes();
+						echo '<a href="?dislike=0&idNoticiaVotar='.$Noticia->getId().'&idUser='.$_SESSION['user']->getId().'"><img src="./views/icons/dislike.png" alt="dislike"></a>';
+						if ($Noticia->getDislikes() == NULL) {echo '0';}
+						echo $Noticia->getDislikes();
+						
+						if ($_SESSION['user']->getId_rol() == 0) {
+							echo '<a id="ocultar" href="?idNoticia='.$Noticia->getId().'">Ocultar noticia</a>';
+						}
+					echo '</div>';
+				}
+				
+			echo '</div>';
+		}
+		?>
+	</section>
+	<?php
+		if (isset($error)) {
+			echo  '<script src="views/votacion.js"></script>';
+		}
+	?>
+	</body>
+</html>

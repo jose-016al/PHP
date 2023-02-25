@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Añadir noticia</title>
+        <link rel="stylesheet" href="views/css/style.css">
+    </head>
+    <body>
+    <header>
+		<h1>Noticias</h1>
+		<nav>	
+			<ul>
+				<li><a href="index.php">Inicio</a></li>
+				<?php
+				if ($_SESSION['user'] -> getName()=="") {
+					echo '<li><a href="index.php?login">Login</a></li>';
+				} else {
+					echo '<li><a href="index.php?noticias">Noticias</a></li>';
+					echo '<li><a href="index.php?login&logout">Salir</a></li>';
+				}
+				?>
+			</ul>
+		</nav>
+	</header>
+    <section>
+        <h2>Añadir una noticia</h2>
+        <div id="addNoticia">
+            <form action="index.php?noticias" method="post" enctype="multipart/form-data">
+                <label>Titulo: </label><br>
+                <input type="text" name="title" placeholder="Titulo"/><br>
+                <label>Url:: </label><br>
+                <textarea name="url"></textarea><br>
+                <input type="submit" name="addNoticia" value="Subir noticia"/>
+            </form>
+        </div>
+    </section>
+</body>
+</html>

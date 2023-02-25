@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Mi lista de peliculas</title>
+	</head>
+	<body>
+		<h1>Mi lista de peliculas</h1>
+		<a href="index.php">Inicio</a> -
+
+		<?php
+		if($_SESSION['user'] -> getName()=="")
+			echo '<a href="index.php?login">Login</a>';
+		else 
+			echo 'Hola '.$_SESSION['user']->getName().' 
+			<a href="index.php?login&logout">Salir</a>';
+		
+		echo '<a href="index.php?añadir">Añadir</a>';
+		
+		?>
+
+		<form action="index.php" method="post">
+			<input type="text" name="busca" placeholder="Titulo para la búsqueda">
+			<input type="submit" value="Busca">
+		</form>
+
+		<ul>
+			<?php
+			foreach($peliculas as $Peli) {
+				echo "<li>".$Peli->getTitulo()."</li>";//CREAR AQUI BOTON PARA BORRAR
+			}
+			
+			// if(count($pelis)>0)
+			// foreach($pelis as $peli){
+			// 	echo "<li>".$peli."</li>";
+			// }
+			// else echo "No se han encontrado resultados."
+			?>
+		</ul>
+	</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./views/css/custom.css">
+</head>
+<body>
+    <div class="container">
+		<header class="row justify-content-between align-items-center">
+			<h1 class="col-auto">Chat Room</h1>
+			<nav class="col-auto">	
+				<ul class="nav">
+                    <li><a href="index.php">Inicio</a></li>
+                    <li><a href="index.php?addSala">Crear sala</a></li>
+                </ul>
+            </nav>
+        </header>
+        <section>
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-5">
+                    <h2 class="text-center pt-5 mb-5">Bienvenido</h2>
+
+                    <?php
+                    if (isset($_GET['login'])) {
+                        if ($_GET['login'] == "registro") {
+                    ?>
+                    <form action="index.php?login=registro" method="POST">
+                        <div class="mb-4">
+                            <label class="form-label">Nombre de usuario</label>
+                            <input type="text" class="form-control" name="user">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Repite la contraseña</label>
+                            <input type="password" class="form-control" name="password2">
+                        </div>
+                        <div class="d-grid">
+                            <input type="submit" class="btn btn-primary" name="registro" value="Crea tu cuenta">
+                        </div>
+                        <div class="my-3">
+                            <span>¿Volver al login? <a href="index.php?login">Iniciar sesion</a></span>
+                        </div>
+                    </form>
+                    <?php 
+                            if (isset($error)) {
+                                echo "<p class='text-danger'>$error</p>";
+                            }
+                        } else {
+                    ?>
+                    <form action="index.php?login" method="POST">
+                        <div class="mb-4">
+                            <label class="form-label">Nombre de usuario</label>
+                            <input type="text" class="form-control" name="user">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <div class="d-grid">
+                            <input type="submit" class="btn btn-primary" name="logeo" value="Iniciar sesion">
+                        </div>
+                        <div class="my-3">
+                            <span>¿No tienes cuenta? <a href="index.php?login=registro">Crea tu cuenta</a></span>
+                        </div>
+                    </form>
+                    <?php
+                            if (isset($error)) {
+                                echo "<p class='text-danger'>$error</p>";
+                            }
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
+        </section>
+    </div>
+    </body>
+</html>

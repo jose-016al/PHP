@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tienda</title>
+		<link rel="stylesheet" href="./views/estilos/style.css">
+	</head>
+	<body>
+	<header>
+		<h1>Tienda</h1>
+		<nav>	
+			<ul>
+				<li><a href="index.php">Inicio</a></li>
+				<?php
+				if ($_SESSION['user'] -> getName()=="") {
+					echo '<li><a href="index.php?login">Login</a></li>';
+				} else {
+					echo '<li><a href="index.php?carrito">Carrito</a></li>';
+					echo '<li><a href="index.php?login&logout">Salir</a></li>';
+				}
+				if ($_SESSION['user'] -> getRol() == 0) {
+					echo '<li><a href="index.php?productos&new">Productos</a></li>';
+				}
+				?>
+			</ul>
+		</nav>
+	</header>
+	<section id="productos">
+		<?php
+		foreach ($productos as $Producto) {
+			echo '<div id="articulos">';			
+				echo '<h3>'.$Producto->getNombre().'</h3>';
+				if ($Producto->getImagen()) {echo '<img src="views/images/'.$Producto->getImagen().'" width="15%"/>';}
+				echo '<p>'.$Producto->getDescripcion().'</p>';
+				echo '<p>'.$Producto->getPrecio().'€</p>';
+				echo '<p>Cantidad:'.$Producto->getCantidad().'</p>';
+				echo '<a href="?addPedido='.$Producto->getId().'">Añadir al carrito</a>';
+			echo '</div>';
+		}
+		?>
+	</section>
+	</body>
+</html>

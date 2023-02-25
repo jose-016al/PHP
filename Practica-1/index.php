@@ -18,7 +18,9 @@
                 $imagen = "img/foto2.jpg";
             } else if ($_GET["v"] == 3) {
                 $imagen = "img/foto3.jpg";
-            }
+            } 
+        } else {
+            $imagen = "img/foto1.jpg";
         }
         ?>
     </head>
@@ -27,6 +29,8 @@
         <?php 
         if (isset($imagen)) {
             echo '<img src=" ' . $imagen . ' " width ="100%">';
+        } else {
+            echo '<h1>Introduce en la barra de direcciones: "?v=n", siendo n un numero entre 1 - 3</h1>';
         }
         ?>
     </body>

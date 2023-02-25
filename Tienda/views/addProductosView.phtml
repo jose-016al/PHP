@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Añadir producto</title>
+        <link rel="stylesheet" href="./views/estilos/style.css">
+    </head>
+    <body>
+    <header>
+		<h1>Tienda</h1>
+		<nav>	
+			<ul>
+				<li><a href="index.php">Inicio</a></li>
+				<?php
+				if ($_SESSION['user'] -> getName()=="") {
+					echo '<li><a href="index.php?login">Login</a></li>';
+				} else {
+					echo '<li><a href="index.php?carrito">Carrito</a></li>';
+					echo '<li><a href="index.php?login&logout">Salir</a></li>';
+				}
+				if ($_SESSION['user'] -> getRol() == 0) {
+					echo '<li><a href="index.php?productos">Productos</a></li>';
+				}
+				?>
+			</ul>
+		</nav>
+	</header>
+    <section>
+        <h2>Añadir un producto</h2>
+            <form action="index.php?productos" method="post" enctype="multipart/form-data">
+                <label>Nombre:</label><br>
+                <input type="text" name="nombre" placeholder="Nombre del producto"/><br>
+                <label>Descripcion: </label><br>
+                <textarea name="descripcion"></textarea><br>
+                <label>Imagen:</label>
+                <input type="file" name="imagen">
+                <label>Precio:</label>
+                <input type="number" name="precio">
+                <label>Cantidad:</label>
+                <input type="number" name="cantidad">
+                <input type="submit" name="addProducto" value="Subir producto"/>
+            </form>
+    </section>
+</body>
+</html>

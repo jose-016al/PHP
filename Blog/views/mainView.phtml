@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Blog</title>
+		<link rel="stylesheet" href="views/css/style.css">
+	</head>
+	<body>
+	<header>
+		<h1>Blog</h1>
+		<nav>	
+		<div id="menuBuscar">
+			<form action="index.php?buscador" method="post">
+				<input type="text" name="buscar" placeholder="buscar...">
+				<input type="submit" name="busqueda" value="buscar"/>
+			</form>
+		</div>
+		<ul>
+			<li><a href="index.php">Inicio</a></li>
+			<?php
+				if ($_SESSION['user'] -> getName()=="")
+					echo '<li><a href="index.php?login">Login</a></li>';
+				else if ($_SESSION['user'] -> getId_rol() == 1) {
+					echo '<li><a href="index.php?login&logout">Salir</a></li>';
+				} else {
+					// echo 'Hola '.$_SESSION['user']->getName();
+					echo '<li><a href="index.php?login&logout">Salir</a></li>'.'
+					<li><a href="index.php?añadir">Articulos</a></li>
+					<li><a href="index.php?admin">Administracion</a></li>';
+				}
+				?>
+			</ul>
+		</nav>
+	</header>
+	<section>
+		<?php
+		echo '<div id="blog">';
+		foreach($articulos as $Articulo) {
+			// echo "<li>".$Articulo->getTitle()." - ".$Articulo->getContenido()." - ".$Articulo->getFecha()." - ".$Articulo->getImagen()." - ".$Articulo->getId_user()."</li>";
+			echo '<div id="articulo"><h2>'.$Articulo->getTitle().'</h2> <br>';
+			echo '<p>'.$Articulo->getContenido(). '</p><br>';
+			if($Articulo->getImagen()) {
+				echo '<img src="views/images/'.$Articulo->getImagen().'" width="50%"/>';
+			}
+			echo '<div id="fecha">';
+				echo '<p> Fecha: '.$Articulo->getFecha().'</p>';
+				echo '<p> Autor: '.$Articulo->getId_user()->getName().'</p>';
+			echo '</div>';
+
+			// echo '<form action="index.php?calificacion" method="POST">
+			// 	<input type="range" name="calificar"  min="1" max="10">	
+			// 	<a href="?&calificacion='.$_GET['calificacion'].'&articulo='.$Articulo->getId().'">Calificar</a>
+			// </form>';
+			
+			if ($_SESSION['user'] -> getId_rol() == 0) {
+				echo '<div id="navArticulos"><form action="">
+					<a href="?articulo='.$Articulo->getId().'">Ocultar articulo</a>
+				</form></div>';
+			}
+
+			echo '<div id="comentarios">';
+			foreach ($Articulo->getComentarios() as $comentario) {
+				
+				echo '<div id="comentariosUser">';
+					echo '<p>'.$comentario->getId_user()->getName().'</p>';
+				echo '</div>';
+				echo '<div id="comentariosContenido">';
+					echo '<p>'.$comentario->getComentario().'</p>';
+					echo '<p>Fecha: '.$comentario->getFecha().'</p>';
+					if ($_SESSION['user'] -> getId_rol() == 0) {
+						echo '<div id="navArticulos"><form action="">
+							<a href="?comentario='.$comentario->getId().'">Ocultar comentario</a>
+						</form></div>';
+					}
+				echo '</div>';
+			}
+			echo '</div>';
+			echo '</div>';
+			if ($_SESSION['user'] -> getName() != "") {
+				echo '<div id="formComentar"><form action="index.php?comentario&id_articulo='.$Articulo->getId().'" method="post">
+					<label>Comentario: </label><br>
+					<textarea name="comentario" placesholder="comentario..."></textarea>
+					<input type="submit" name="comentar" value="Comentar"/>
+				</form></div>';
+			}
+		}
+		echo '</div>';
+
+		echo '<div id="navPaginacion">';
+			// PAGINACION
+			for ($i = 1; $i <= $totalPaginas; $i++) { 
+				echo "<ul>
+					<li><a href='?pagina=$i'>$i</a></li>
+				</ul>";
+			}
+		echo '</div>';
+		?>
+	</section>
+	</body>
+</html>

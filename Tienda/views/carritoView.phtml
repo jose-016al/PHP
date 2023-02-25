@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito</title>
+	<link rel="stylesheet" href="./views/estilos/style.css">	
+</head>
+<body>
+    <header>
+		<h1>Tienda</h1>
+		<nav>	
+			<ul>
+				<li><a href="index.php">Inicio</a></li>
+				<?php
+				if ($_SESSION['user'] -> getName()=="") {
+					echo '<li><a href="index.php?login">Login</a></li>';
+				} else {
+					echo '<li><a href="index.php?carrito">Carrito</a></li>';
+					echo '<li><a href="index.php?login&logout">Salir</a></li>';
+				}
+				if ($_SESSION['user'] -> getId_rol() == 0) {
+					echo '<li><a href="index.php?productos">Productos</a></li>';
+				}
+				?>
+			</ul>
+		</nav>
+	</header>
+    <section id="carrito">
+        <?php
+		if ($carritoLength <= 1) {
+			echo '<h2 id="carritoVacio">Tu cesta esta vacia<h2>';
+		} else {
+			foreach ($carrito as $Carrito) {
+				foreach ($Carrito->getPedidos() as $pedidos) {
+					foreach ($pedidos->getId_producto() as $productos) {
+						echo $productos->getNombre()." - ";
+						echo "cantidad: ".$pedidos->getCantidadProductos()." - ";
+						echo "precio: ".$pedidos->getTotalPrecio();
+						echo '<a href="?deleteProducto='.$pedidos->getId().'">Quitar producto</a><br>';
+					}
+				}
+				echo "Subtotal: ".$Carrito->getTotal();
+				echo '<a href="?realizarPedido='.$Carrito->getId().'">Relizar pedido</a>';
+			}
+		}		
+        ?>
+    </section>
+</body>
+</html>

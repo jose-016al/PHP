@@ -1,0 +1,27 @@
+    /* ----------Header y menu de navegacion principal--------- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header nav ul {
+    display: flex;
+}
+header nav ul li {
+    list-style: none;
+}
+header nav ul li a {
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+}
+header nav ul li a:hover {
+    background-color: black;
+    color: white;
+    
+}
+
+    /* ----------Login--------- */
+.error {
+    color: red;
+}

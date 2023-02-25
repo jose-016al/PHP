@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mi blog</title>
+</head>
+<body>
+<h1>Mi blog</h1>
+<a href="index.php">Inicio</a> -
+
+<?php
+if($_SESSION['user']->getName()=="")
+	echo '<a href="index.php?login">Login</a>';
+else {
+	echo '<a href="index.php?product&new">Añadir producto</a>';
+
+	echo '<a href="index.php?order&cart">Ver Carrito</a>';
+	echo 'Hola '.$_SESSION['user']->getName().' 
+	<a href="index.php?login&logout">Salir</a>';
+}
+echo "<br>";
+
+foreach($products as $product){
+	echo '<article>
+	<img src="views/images/'.$product->getImage().'" width="100px">
+	<h5>'.$product->getName().'</h5>
+	'.$product->getDesc().'<br>
+	'.$product->getPrice().'€ (quedan '.$product->getStock().')<br> 
+	<a href="index.php?order&addProduct='.$product->getId().'">Comprar</a>';
+	if($_SESSION['user']->getRol()>0)
+		echo '<a href="index.php?product&edit='.$product->getId().'">Editar</a>';
+	echo'</article>';
+}
+?>
+
+
+</body>
+</html>

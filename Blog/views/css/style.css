@@ -1,0 +1,202 @@
+* {
+    margin: 0px;
+    /* background-color: #1b1e24; */
+}
+
+/* ----------HEADER Y MENU---------- */
+
+header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+nav {
+    display: flex;
+}
+nav ul, #navPaginacion ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+    margin: 0;
+} 
+nav ul li a, #navPaginacion ul li a {
+    display: block;
+    float: left;
+    padding: 1rem;
+    text-decoration: none;
+    color: black;
+}
+nav ul li a:hover {
+    background-color: black;
+    color: white;
+}
+#navPaginacion ul li a:hover {
+    background-color: black;
+    color: white;
+}
+#navPaginacion {
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
+section {
+    padding: 10px;
+}
+h1, h2 {
+    text-align: center;
+}
+
+/* ----------BUSCADOR---------- */
+
+#menuBuscar input {
+    font-size: 15px;
+    border-radius: 50px;
+    margin: 15px 0px 0px 0px;
+}
+
+
+/* ----------ARTICULOS Y COMENTARIOS---------- */
+
+/* ARTICULOS--- */
+#blog {
+    width: 50%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+#articulo {
+    border: solid 1px #ccc;
+    box-shadow: rgba(0, 0, 0, 0.50) 10px 10px 10px;
+    border-radius: 20px;
+    margin-top: 20px;
+    padding: 20px;
+}
+#articulo img {
+    width: 50%;
+    display: block;
+    margin: 0 auto;
+}
+#articulo p {
+    margin-top: 10px;
+    text-align: justify;
+}
+#articulo #fecha {
+    display: flex;
+    justify-content: space-around;
+}
+#navArticulos {
+    display: flex;
+    margin-top: 10px;
+    justify-content: center;
+}
+#navArticulos a {
+    display: block;
+    float: left;
+    padding: 1rem;
+    text-decoration: none;
+    color: black;
+}
+#navArticulos a:hover {
+    background-color: black;
+    color: white;
+}
+
+/* COMENTARIOS--- */
+#comentarios {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+#comentariosUser {
+    margin-top: 30px;
+    width: 20%;
+    text-align: center;
+}
+#comentariosContenido {
+    margin-top: 30px;
+    width: 70%;
+    border-left: solid 2px grey;
+    padding-left: 15px;
+}
+
+/* FORMULARIO DE COMENTARIO--- */
+#formComentar {
+    border: solid 1px grey;
+    width: 60%;
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 10px;
+    margin-left: 200px;
+}
+#formComentar textarea {
+    resize: none;
+    width: 100%;
+    height: 50px;
+}
+
+/* ----------AÑADIR ARTICULOS---------- */
+
+#addArticulo {
+    width: 50%;
+    margin: 0 auto;
+    border: solid 1px #ccc;
+    box-shadow: rgba(0, 0, 0, 0.50) 10px 10px 10px;
+    border-radius: 20px;
+    padding: 20px;
+}
+#addArticulo label, input {
+    margin: 10px;
+}
+#AddArticuloTitle {
+    display: flex;
+}
+#addArticulo textarea {
+    margin-top: 10px;
+    resize: none;
+    width: 99%;
+    height: 100px;
+}
+
+/* ----------PANEL DE ADMINISTRACION---------- */
+
+#adminPanel {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+}
+
+#usuariosNormales {
+    width: 25%;
+}
+
+#usuariosAdmin {
+    width: 25%;
+}
+
+/* ----------FORMULARIO DE LOGIN---------- */
+
+.formularioLogeo {
+    border: solid 1px #ccc;
+    box-shadow: rgba(0, 0, 0, 0.50) 10px 10px 10px;
+    border-radius: 30px;
+    padding: 20px;
+    width: 30%;
+    margin: 0 auto;
+    margin-top: 100px;
+}
+.formularioLogeo form {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.formularioLogeo label {
+    font-size: 18px;
+}
+.formularioLogeo input {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* ----------PAGINACION---------- */
+

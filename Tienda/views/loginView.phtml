@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./views/estilos/style.css">
+</head>
+<body>
+    <header>
+		<h1>Tienda</h1>
+		<nav>	
+			<ul>
+				<li><a href="index.php">Inicio</a></li>
+				<?php
+				if ($_SESSION['user'] -> getName()=="") {
+					echo '<li><a href="index.php?login">Login</a></li>';
+                    echo '<li><a href="index.php?login=registro">Registro</a></li>';
+				} else {
+					echo '<li><a href="index.php?carrito">Carrito</a></li>';
+					echo '<li><a href="index.php?login&logout">Salir</a></li>';
+				}
+				if ($_SESSION['user'] -> getRol() == 0) {
+					echo '<li><a href="index.php?productos">Productos</a></li>';
+				}
+				?>
+			</ul>
+		</nav>
+	</header>
+    <section>
+        <?php
+        if (isset($_GET['login'])) {
+            if ($_GET['login'] == "registro") {
+                echo '<div class="formularioLogeo">
+                <h2>Registro</h2>
+                    <form action="index.php?login=registro" method="post">
+                        <input type="text" name="user" placeholder="Usuario"/>
+                        <input type="password" name="password" placeholder="Contraseña"/>
+                        <input type="password" name="password2" placeholder="Repite la contraseña"/>
+                        <input type="submit" name="registro" value="Registro"/>
+                    </form>
+                </div>';
+                if (isset($error)) {
+                    echo "<p class='error'>$error</p>";
+                }
+            } else {
+                echo '<div class="formularioLogeo">
+                <h2>Login</h2>
+                    <form action="index.php?login" method="post">
+                        <input type="text" name="user" placeholder="Usuario"/>
+                        <input type="password" name="password" placeholder="Contraseña"/>
+                        <input type="submit" name="logeo" value="Entrar"/>
+                    </form>
+                </div>';
+                if (isset($error)) {
+                    echo "<p class='error'>$error</p>";
+                }
+            }
+        }
+        ?>
+    </section>
+    </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mi blog</title>
+</head>
+<body>
+<h1>Mi blog</h1>
+<a href="index.php">Inicio</a> -
+
+<?php
+if($_SESSION['user']->getName()=="")
+	echo '<a href="index.php?login">Login</a>';
+else {
+	echo '<a href="index.php?product&new">Añadir producto</a>';
+	echo 'Hola '.$_SESSION['user']->getName().' 
+	<a href="index.php?login&logout">Salir</a>';
+}
+echo "<br>";
+
+if(isset($product)){
+
+echo '
+<form action="index.php?product" method="POST" enctype="multipart/form-data">
+    Nombre: <input type="text" name="name" value="'.$product->getName().'"><br>
+    Descripcion: <input type="text" name="description" value="'.$product->getDesc().'"><br>
+    Precio: <input type="text" name="price" value="'.$product->getPrice().'"><br>
+    Imagen: <input type="file" name="image" value="'.$product->getImage().'"><br>
+    Stock: <input type="number" name="stock" value="'.$product->getStock().'"><br>
+    <input type="checkbox" name="visible" value="1"> Visible<br>
+    <input type="hidden" name="id" value="'.$product->getId().'">
+    <input type="submit" name="update" value="publicar">
+</form>';
+
+}
+else echo '
+<form action="index.php?product" method="POST" enctype="multipart/form-data">
+    Nombre: <input type="text" name="name"><br>
+    Descripcion: <input type="text" name="description"><br>
+    Precio: <input type="text" name="price"><br>
+    Imagen: <input type="file" name="image"><br>
+    Stock: <input type="number" name="stock"><br>
+    <input type="submit" name="add" value="publicar">
+</form>';
+
+if(isset($info))
+    echo '<script>alert("'.$info.'")</script>';
+?>
+</body>
+</html>
