@@ -1,4 +1,7 @@
-<?php require_once "./Includes/db.php" ?>
+<?php 
+  require_once './Includes/db.php';
+  require_once './Includes/helper.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,24 +16,23 @@
     <?php require_once "./Includes/aside.php" ?>
     <div id="primary">
       <h1>Ultimas entradas</h1>
-      <article class="entrada">
-        <a href="#">
-          <h2>Titulo de entrada</h2>
-          <p>Descripcion</p>
-        </a>  
-      </article>
-      <article class="entrada">
-        <a href="#">
-          <h2>Titulo de entrada</h2>
-          <p>Descripcion</p>
-        </a>  
-      </article>
-      <article class="entrada">
-        <a href="#">
-          <h2>Titulo de entrada</h2>
-          <p>Descripcion</p>
-        </a>  
-      </article>
+
+      <?php 
+        $entrys = findAllEntrysRecents($db);
+        if (!empty($entrys)) :
+          while($entry = mysqli_fetch_assoc($entrys)): 
+      ?>
+            <article class="entrada">
+              <a href="entry.php?id=<?=$entry['id']?>">
+                <h2><?=$entry['titulo']?></h2>
+                <span class="date"><?=$entry['categoria'].' | '.$entry['fecha']?></span>
+                <p><?=substr($entry['descripcion'], 0,180)."..."?></p>
+              </a>  
+            </article>
+      <?php 
+          endwhile; 
+        endif;
+      ?>
 
       <div id="see-all"><a href="#">Ver todas las entradas</a></div>
     </div>

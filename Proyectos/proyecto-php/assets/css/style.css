@@ -38,7 +38,7 @@ body{
     background: red;
 }
 
-.fecha{
+.date{
     color: #4e4e4e;
     margin-top:5px;
     font-size: 14px;
@@ -161,7 +161,7 @@ input[type="password"]{
 
 input[type="button"],
 input[type="submit"],
-.boton{
+.button{
     margin-top: 5px;
     margin-bottom: 5px;
     display: block;
@@ -173,27 +173,26 @@ input[type="submit"],
     padding: 7px;
 }
 
-.boton{
+.button{
     color:white !important;
     text-align: center;
     width: 130px;
 }
 
-.boton-naranja{
+.button-orange{
     background: orange;
     border-color: #bd7d08;
 }
 
-.boton-verde{
+.button-green{
     background: #21b921;
     border-color: green;
 }
 
-.boton-rojo{
+.button-red{
     background: red;
     border-color: #444;
 }
-
 
 /*PRINCIPAL*/
 #primary{

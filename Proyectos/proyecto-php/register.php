@@ -1,4 +1,5 @@
 <?php
+
 require_once './Includes/db.php';
 
 function validateUserData($data) {
@@ -28,7 +29,7 @@ function validateUserData($data) {
     return $errors;
 }
 
-function saveUser($db, $name, $surname, $email, $password) {
+function register($db, $name, $surname, $email, $password) {
     $passwordSecure = password_hash($password, PASSWORD_BCRYPT, ['cost' => 4]);
 
     try {
@@ -48,11 +49,11 @@ function saveUser($db, $name, $surname, $email, $password) {
 }
 
 // Código principal
-if (!empty($_POST)) {
+if (isset($_POST['register'])) {
     $errors = validateUserData($_POST);
 
     if (empty($errors)) {
-        if (saveUser($db, $_POST["name"], $_POST["surname"], $_POST["email"], $_POST["password"])) {
+        if (register($db, $_POST["name"], $_POST["surname"], $_POST["email"], $_POST["password"])) {
             $_SESSION['complete'] = "El usuario se ha creado correctamente";
         }
     } else {
