@@ -1,6 +1,7 @@
 <?php
 
-class User {
+class User
+{
   private $id;
   private $firstName;
   private $lastName;
@@ -8,10 +9,15 @@ class User {
   private $password;
   private $role;
   private $image;
-  private $db;
 
-  public function __construct() {
-    $this->db = Database::connect();
+  public function __construct($id = null, $firstName = null, $lastName = null, $email = null, $password = null, $role = 'user', $image = null) {
+    $this->id = $id;
+    $this->firstName = $firstName;
+    $this->lastName = $lastName;
+    $this->email = $email;
+    $this->password = $password;
+    $this->role = $role;
+    $this->image = $image;
   }
 
   // Getters
@@ -32,7 +38,7 @@ class User {
   }
 
   public function getPassword() {
-    return password_hash($this->password, PASSWORD_BCRYPT, ['cost' => 4]);
+    return $this->password;
   }
 
   public function getRole() {
@@ -70,47 +76,5 @@ class User {
 
   public function setImage($image) {
     $this->image = $image;
-  }
-
-  public function save() {
-    $sql = "INSERT INTO users (first_name, last_name, email, password, role, image) 
-            VALUES (?, ?, ?, ?, 'user', NULL)";
-
-    $stmt = $this->db->prepare($sql);
-    if (!$stmt) {
-      return false;
-    }
-
-    $stmt->bind_param("ssss", 
-      $this->firstName, 
-      $this->lastName, 
-      $this->email, 
-      $this->getPassword()
-    );
-
-    $save = $stmt->execute();
-    $stmt->close();
-
-    return $save; 
-  }
-
-  public function login() {
-    $email = $this->email;
-    $password = $this->password;
-
-    $sql = "SELECT * FROM users WHERE email = '$email'";
-    $login = $this->db->query($sql);
-
-    if ($login && mysqli_num_rows($login) == 1) {
-      $user = mysqli_fetch_object($login);
-      $verify = password_verify($password, $user->password);
-      if ($verify) {
-        return $user;
-      } else {
-        return false;
-      }
-  } else {
-      return false;
-  }
   }
 }

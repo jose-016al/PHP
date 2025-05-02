@@ -16,11 +16,16 @@
     <tr>
       <th>ID</th>
       <th>Nombre</th>
+      <th>Acciones</th>
     </tr>
     <?php while($cat = $categories->fetch_object()): ?>
       <tr>
         <td><?=$cat->id;?></td>
         <td><?=$cat->name;?></td>
+        <td>
+          <a href="<?=base_url?>category/update&id=<?=$cat->id?>" class="button button-actions">Editar</a>
+          <a href="<?=base_url?>category/delete&id=<?=$cat->id?>" class="button button-actions button-red">Eliminar</a>
+        </td>
       </tr>
     <?php endwhile; ?>
   </table>

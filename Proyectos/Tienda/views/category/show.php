@@ -1,6 +1,6 @@
 <div id="primary">
-  <?php if (isset($cat)): ?>
-    <h1><?= $cat->name ?></h1>
+  <?php if (isset($category)): ?>
+    <h1><?= $category->name ?></h1>
     <?php if ($products->num_rows == 0): ?>
       <p>No hay productos para mostrar</p>
     <?php else: ?>

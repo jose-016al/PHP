@@ -4,11 +4,11 @@
     <p>Tu pedido ha sido guardado con exito, una vez que realices la transferencia bancaria con el coste del pedido será procesado y enviado.</p>
 
     <br/>
-    <?php if (isset($ord)): ?>
+    <?php if (isset($order)): ?>
 
       <h3>Datos del pedido:</h3>
-      <p>Número de pedido: <?= $ord->id ?></p>
-      <p>Total a pagar: <?= $ord->cost ?>€</p>
+      <p>Número de pedido: <?= $order->id ?></p>
+      <p>Total a pagar: <?= $order->cost ?>€</p>
       <p>Productos:</p>
       <table>
         <tr>

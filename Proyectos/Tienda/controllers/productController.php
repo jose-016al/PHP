@@ -1,29 +1,30 @@
 <?php
 require_once './models/product.php';
+require_once './repositories/productRepository.php';
 
 class productController {
 
+  private $productRepository;
+
+  public function __construct() {
+    $this->productRepository = new ProductRepository(); 
+  }
+
   public function featured() {
-    $product = new Product();
-    $products = $product->findRandom(6);
+    $products = $this->productRepository->findRandom(6);
     require_once './views/product/featured.php';
   }
 
   public function show() {
-    $id = isset($_GET['id']) ? $_GET['id'] : false;
+    $id = isset($_GET['id']) ? $_GET['id'] : header("Locaiton:".base_url);
 
-    if ($id) {
-      $product = new Product();
-      $product->setId($id);
-      $pro = $product->findById();
-      require_once './views/product/show.php';
-    }
+    $product = $this->productRepository->findById($id);
+    require_once './views/product/show.php';
   }
 
   public function index() {
     Utils::isAdmin();
-    $product = new Product();
-    $products = $product->findAll();
+    $products = $this->productRepository->findAll();
     require_once './views/product/index.php';
   }
 
@@ -34,7 +35,7 @@ class productController {
 
   public function save() {
     Utils::isAdmin();
-    if (isset($_POST)) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $name = isset($_POST['name']) ? $_POST['name'] : false;
       $description = isset($_POST['description']) ? $_POST['description'] : false;
       $price = isset($_POST['price']) ? $_POST['price'] : false;
@@ -42,13 +43,8 @@ class productController {
       $category = isset($_POST['category']) ? $_POST['category'] : false;
       $id = isset($_GET['id']) ? $_GET['id'] : false;
 
-      if ($name && $description && $price && $stock && $category) {
-        $product = new Product();
-        $product->setName($name);
-        $product->setDescription($description);
-        $product->setPrice($price);
-        $product->setStock($stock);
-        $product->setCategoryId($category);
+      if ($name && $description && $price && is_numeric($stock) && $category) {
+        $product = new Product(null, $category, $name, $description, $price, $stock);
         
         // Guardar imagen
         if (isset($_FILES['image'])) {
@@ -67,9 +63,9 @@ class productController {
   
         if ($id) {
           $product->setId($id);
-          $save = $product->update();
+          $save = $this->productRepository->update($product);
         } else {
-          $save = $product->save();
+          $save = $this->productRepository->save($product);
         }
         if ($save) {
           $_SESSION['product'] = 'complete';
@@ -88,17 +84,11 @@ class productController {
   public function update() {
     Utils::isAdmin();
 
-    $id = isset($_GET['id']) ? $_GET['id'] : false;
+    $id = isset($_GET['id']) ? $_GET['id'] : header("Location:".base_url.'product/index');
 
-    if ($id) {
-      $edit = true;
-      $product = new Product();
-      $product->setId($id);
-      $pro = $product->findById();
-      require_once './views/product/save.php';
-    } else {
-      header("Location:".base_url.'product/index');
-    }
+    $edit = true;
+    $product = $this->productRepository->findById($id);
+    require_once './views/product/save.php';
   }
 
   public function delete() {
@@ -107,14 +97,12 @@ class productController {
     $id = isset($_GET['id']) ? $_GET['id'] : false;
 
     if ($id) {
-      $product = new Product();
-      $product->setId($id);
-      $delete = $product->delete();
+      $delete = $this->productRepository->delete($id);
       if ($delete) {
         $_SESSION['delete'] = 'complete';
       } else {
         $_SESSION['delete'] = 'failed';  
-      }
+      }      
     } else {
       $_SESSION['delete'] = 'failed';
     }

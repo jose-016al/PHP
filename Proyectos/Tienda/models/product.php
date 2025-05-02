@@ -2,18 +2,25 @@
 
 class Product {
   private $id;
-  private $category_id;
+  private $categoryId;
   private $name;
   private $description;
   private $price;
   private $stock;
   private $offer;
-  private $date_added;
+  private $dateAdded;
   private $image;
-  private $db;
 
-  public function __construct() {
-    $this->db = Database::connect();
+  public function __construct($id = null, $categoryId = null, $name = null, $description = null,  $price = null, $stock = null, $offer = null, $dateAdded = null, $image = null) {
+    $this->id = $id;
+    $this->categoryId = $categoryId;
+    $this->name = $name;
+    $this->description = $description;
+    $this->price = $price;
+    $this->stock = $stock;
+    $this->offer = $offer;
+    $this->dateAdded = $dateAdded;
+    $this->image = $image;
   }
 
   // Getters
@@ -22,7 +29,7 @@ class Product {
   }
 
   public function getCategoryId() {
-    return $this->category_id;
+    return $this->categoryId;
   }
 
   public function getName() {
@@ -46,15 +53,11 @@ class Product {
   }
 
   public function getDateAdded() {
-    return $this->date_added;
+    return $this->dateAdded;
   }
 
   public function getImage() {
     return $this->image;
-  }
-
-  public function getDb() {
-    return $this->db;
   }
 
   // Setters
@@ -62,8 +65,8 @@ class Product {
     $this->id = $id;
   }
 
-  public function setCategoryId($category_id) {
-    $this->category_id = $category_id;
+  public function setCategoryId($categoryId) {
+    $this->categoryId = $categoryId;
   }
 
   public function setName($name) {
@@ -86,93 +89,12 @@ class Product {
     $this->offer = $offer;
   }
 
-  public function setDateAdded($date_added) {
-    $this->date_added = $date_added;
+  public function setDateAdded($dateAdded) {
+    $this->dateAdded = $dateAdded;
   }
 
   public function setImage($image) {
     $this->image = $image;
-  }
-
-  public function findAll() {
-    return $this->db->query("SELECT * FROM products ORDER BY id DESC");
-  }
-
-  public function findAllCategory() {
-    return $this->db->query("SELECT p.*, c.name AS 'catName' FROM products p 
-      INNER JOIN categories c ON c.id = p.category_id 
-      WHERE p.category_id = {$this->category_id} 
-      ORDER BY id DESC");
-  }
-
-  public function findRandom($limit) {
-    return $this->db->query("SELECT * FROM products ORDER BY RAND() LIMIT $limit");
-  }
-
-  public function findById() {
-    return $this->db->query("SELECT * FROM products WHERE id = {$this->id}")->fetch_object();
-  }
-
-  public function save() {
-    $sql = "INSERT INTO products (category_id, name, description, price, stock, offer, date_added, image) 
-      VALUES (?, ?, ?, ?, ?, NULL, CURDATE(), ?)";
-
-    $stmt = $this->db->prepare($sql);
-    if (!$stmt) {
-      return false;
-    }
-
-    $stmt->bind_param("ssssss", 
-      $this->category_id,
-      $this->name, 
-      $this->description,
-      $this->price,
-      $this->stock,
-      $this->image
-    );
-
-    $save = $stmt->execute();
-    $stmt->close();
-
-    return $save; 
-  }
-
-  public function delete() {
-    $sql = "DELETE FROM products WHERE id={$this->id}";
-    $delete = $this->db->query($sql);
-    if ($delete) {
-      return true;
-    }
-    return false;
-  }
-
-  public function update() {
-    $sql = "UPDATE products 
-            SET category_id = ?, name = ?, description = ?, price = ?, stock = ?";
-    
-    $params = ["ssssi", $this->category_id, $this->name, $this->description, $this->price, $this->stock];
-
-    if ($this->image !== null) {
-        $sql .= ", image = ?";
-        $params[0] .= "s"; 
-        $params[] = $this->image;
-    }
-
-    $sql .= " WHERE id = ?";
-    $params[0] .= "i";
-    $params[] = $this->id;
-
-    $stmt = $this->db->prepare($sql);
-    if (!$stmt) {
-        return false;
-    }
-
-    $stmt->bind_param(...$params);
-
-    $updated = $stmt->execute();
-    $stmt->close();
-
-    return $updated;
   }
 
 }

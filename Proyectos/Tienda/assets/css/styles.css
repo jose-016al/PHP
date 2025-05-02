@@ -45,6 +45,11 @@ td{
     width: 100px;
 }
 
+.stock {
+    color: red;
+    font-weight: bold;
+}
+
 /*CONTAINER*/
 #container{
    width: 80%;
